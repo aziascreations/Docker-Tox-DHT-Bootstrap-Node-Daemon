@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  tox-boostrapd:
+    container_name: tox-boostrapd
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 33444:8080/tcp
+      - 33444:8080/udp
+      - 33445:33445/tcp
+      - 33445:33445/udp
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./tox-bootstrapd.conf:/etc/tox-bootstrapd.conf
+      - ./tox-bootstrapd_var-lib:/var/lib/tox-bootstrapd
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
