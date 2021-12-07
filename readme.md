@@ -1,54 +1,82 @@
-# Docker - Tox DHT bootstrap node daemon
-A simple Dockerfile and docker-compose file that can be used to create a Tox DHT bootstrap node on SBCs.
+# Docker - Tox DHT Bootstrap Node Daemon
+A simple dockerized version of the *tox-bootstrapd* application from the [c-toxcore](https://github.com/TokTok/c-toxcore) project.
+This container is mainly intended to be built and ran on ARM-based SBCs.
 
 ## Requirements
 ### Building
-__CPU Architecture:__ ARM64 <sub><sup>(Use the [official image](https://github.com/TokTok/c-toxcore/tree/master/other/docker) for x86 and AMD64)</sup></sub><br>
-__RAM:__ Less than 16MiB <sub><sup>(More is required while compiling)</sup></sub>
-### Container
-__CPU Architecture:__ ARM64 <sub><sup>(Use the [official image](https://github.com/TokTok/c-toxcore/tree/master/other/docker) for x86 and AMD64)</sup></sub><br>
+__CPU Architecture:__ Any <sub><sup>(Use the [official image](https://github.com/TokTok/c-toxcore/tree/master/other/docker) for x86-64)</sup></sub><br>
+__RAM:__ Around 256MiB <sub><sup>(More of a recommendation)</sup></sub>
+### Running
+__CPU Architecture:__ ARM64 <sub><sup>(Use the [official image](https://github.com/TokTok/c-toxcore/tree/master/other/docker) for x86-64)</sup></sub><br>
 __RAM:__ Less than 16MiB
 
-## Remarks
-TODO.
-
 ## Building
-In order to build this container, all you have to do is to clone this repository and run `docker-compose up`.
+### Cloning
+In order to clone this repository, you simply have to use the foollowing commands:
+```bash
+git clone https://github.com/aziascreations/Docker-Tox-DHT-Bootstrap-Node-Daemon.git
+cd Docker-Tox-DHT-Bootstrap-Node-Daemon
+```
 
-## Configuration
-### Environment Variables (W.I.P)
+### Via Docker
+**TODO !**
+
+### Via Docker-compose
+In order to build this container with *docker-compose*, you simply have to use the following command:
+```bash
+docker-compose up
+```
+
+However, you can also choose to configure the ports, environment variables and volumes in the [docker-compose.yml](docker-compose.yml) file if you want to.
+
+Once the container has been built, you can change the [tox-bootstrapd.conf](tox-bootstrapd.conf) config file and clean any build leftovers.
+
+## Running
+TODO: Wait until it is available on Docker Hub.
+
+### Configuration
+#### Environment Variables
 <table>
 	<tr>
 		<td>
-			Variable
+			Name
+		</td>
+		<td>
+			Description
 		</td>
 		<td>
 			Value
 		</td>
 		<td>
-			TODO
+			Default
 		</td>
 	</tr>
 	<tr>
 		<td>
-			PUID
+			<code>PUID</code>
 		</td>
 		<td>
-			Integer<br>
-			The user's UID running the application.
+			The UID under which the application should run.
 		</td>
 		<td>
+			Integer
+		</td>
+		<td>
+			<code>1000</code>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			PGID
+			<code>PGID</code>
 		</td>
 		<td>
-			Integer<br>
-			The user's PID running the application.
+			The PID under which the application should run.
 		</td>
 		<td>
+			Integer
+		</td>
+		<td>
+			<code>1000</code>
 		</td>
 	</tr>
 </table>
