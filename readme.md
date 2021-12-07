@@ -5,10 +5,17 @@ This container is mainly intended to be built and ran on ARM-based SBCs.
 ## Requirements
 ### Building
 __CPU Architecture:__ Any <sub><sup>(Use the [official image](https://github.com/TokTok/c-toxcore/tree/master/other/docker) for x86-64)</sup></sub><br>
-__RAM:__ Around 256MiB <sub><sup>(More of a recommendation)</sup></sub>
+__RAM:__ Around 256MiB <sub><sup>(More of a recommendation)</sup></sub><br>
+__HDD:__ Around 300MB
 ### Running
+#### Self-built
+__CPU Architecture:__ Any<br>
+__RAM:__ Less than 16MiB<br>
+__HDD:__ Less than 16MB<sub><sup>(If leftovers are cleaned)</sup></sub>
+#### Docker Hub
 __CPU Architecture:__ ARM64 <sub><sup>(Use the [official image](https://github.com/TokTok/c-toxcore/tree/master/other/docker) for x86-64)</sup></sub><br>
-__RAM:__ Less than 16MiB
+__RAM:__ Less than 16MiB<br>
+__HDD:__ Less than 16MB
 
 ## Building
 ### Cloning

@@ -1,8 +1,8 @@
 version: "3.3"
 
 services:
-  tox-boostrapd:
-    container_name: tox-boostrapd
+  tox-bootstrapd:
+    container_name: tox-bootstrapd
     build:
       context: .
       dockerfile: Dockerfile
