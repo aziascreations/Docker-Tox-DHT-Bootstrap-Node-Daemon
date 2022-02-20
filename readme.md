@@ -11,7 +11,7 @@ __HDD:__ Around 300MB
 #### Self-built
 __CPU Architecture:__ Any<br>
 __RAM:__ Less than 16MiB<br>
-__HDD:__ Less than 16MB<sub><sup>(If leftovers are cleaned)</sup></sub>
+__HDD:__ Less than 16MB <sub><sup>(If leftovers are cleaned)</sup></sub>
 #### Docker Hub
 __CPU Architecture:__ ARM64 <sub><sup>(Use the [official image](https://github.com/TokTok/c-toxcore/tree/master/other/docker) for x86-64)</sup></sub><br>
 __RAM:__ Less than 16MiB<br>
@@ -42,6 +42,38 @@ Once the container has been built, you can change the [tox-bootstrapd.conf](tox-
 TODO: Wait until it is available on Docker Hub.
 
 ### Configuration
+#### Build Arguments
+<table>
+	<tr>
+		<td>
+			Name
+		</td>
+		<td>
+			Description
+		</td>
+		<td>
+			Value
+		</td>
+		<td>
+			Default
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>TOXCORE_DESIRED_VERSION</code>
+		</td>
+		<td>
+			Release version number of the tox-core project that should be grabbed from GitHub and compiled.
+		</td>
+		<td>
+			String
+		</td>
+		<td>
+			<code>0.2.16</code>
+		</td>
+	</tr>
+</table>
+
 #### Environment Variables
 <table>
 	<tr>

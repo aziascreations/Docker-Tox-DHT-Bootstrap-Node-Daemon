@@ -1,11 +1,12 @@
 # -===- Compiling stage -===-
 # Preparing the temporary compilier container
 FROM alpine:latest AS build
+ARG TOXCORE_DESIRED_VERSION=0.2.16
 
 # Installing required build packages
 # * Optional packages: bash
 # * Note: The "g++" package is required even tho it isn't explicitly used anywhere...
-RUN apk add --no-cache wget check git libtool libsodium-dev unzip yasm gcc cmake libconfig-dev make g++
+RUN apk add --no-cache wget check git libtool libsodium-dev unzip yasm gcc cmake libconfig-dev make g++ msgpack-c-dev
 
 # Installing the x86 linux-headers
 RUN cat /etc/apk/arch > /arch-original.txt && \
@@ -15,7 +16,7 @@ RUN cat /etc/apk/arch > /arch-original.txt && \
 
 # Downloading and extracting the source files...
 WORKDIR /build/tox
-RUN wget -O "/build/c-toxcore.tar.gz" https://github.com/TokTok/c-toxcore/archive/refs/tags/v0.2.13.tar.gz && \
+RUN wget -O "/build/c-toxcore.tar.gz" https://github.com/TokTok/c-toxcore/archive/refs/tags/v$TOXCORE_DESIRED_VERSION.tar.gz && \
     tar -xvf "/build/c-toxcore.tar.gz" && \
     rm "/build/c-toxcore.tar.gz" && \
     mkdir "/build/output"
@@ -24,7 +25,7 @@ RUN wget -O "/build/c-toxcore.tar.gz" https://github.com/TokTok/c-toxcore/archiv
 # Please refer to "https://github.com/TokTok/c-toxcore/blob/master/INSTALL.md#main" for more info on the
 #  compiled components.
 # * Output directory: /build/tox/output/ => bin|include|lib
-WORKDIR /build/tox/c-toxcore-0.2.13/_build
+WORKDIR /build/tox/c-toxcore-$TOXCORE_DESIRED_VERSION/_build
 RUN cmake \
     -D CMAKE_C_COMPILER=/usr/bin/gcc \
     -D CMAKE_CXX_COMPILER=/usr/bin/gcc \
@@ -47,24 +48,27 @@ RUN cmake \
 # -===- Final stage -===-
 # Preparing the final container
 FROM alpine:latest AS final
+ARG TOXCORE_DESIRED_VERSION=0.2.16
+
+# Setting up the labels
 LABEL org.opencontainers.image.authors="Herwin Bozet <herwin.bozet@gmail.com>"
 #LABEL org.opencontainers.image.created="TODO"
 LABEL org.opencontainers.image.description="Dockerized Tox DHT bootstrap node daemon."
 #LABEL org.opencontainers.image.url="TODO"
-LABEL org.opencontainers.image.version="0.2.13"
+LABEL org.opencontainers.image.version=$TOXCORE_DESIRED_VERSION
 LABEL org.opencontainers.image.licenses="GPL-3.0-only"
 LABEL org.opencontainers.image.title="tox-bootstrapd"
 LABEL maintainer="Herwin Bozet <herwin.bozet@gmail.com>"
 
 # Installing required libraries
 # Missing packages for toxcore: libm libpthread librt
-RUN apk add --no-cache libsodium libconfig
+RUN apk add --no-cache libsodium libconfig msgpack-c
 
 # Copying compile things from the previous container.
 COPY --from="build" /build/tox/output/bin/* /usr/bin/
 COPY --from="build" /build/tox/output/include/* /usr/include/
 COPY --from="build" /build/tox/output/lib/* /usr/lib/
-COPY --from="build" /build/tox/c-toxcore-0.2.13/other/bootstrap_daemon/tox-bootstrapd.conf /etc/tox-bootstrapd.conf
+COPY --from="build" /build/tox/c-toxcore-$TOXCORE_DESIRED_VERSION/other/bootstrap_daemon/tox-bootstrapd.conf /etc/tox-bootstrapd.conf
 
 # Exposing the required ports for a bootstrap node
 EXPOSE 8080/tcp 8080/udp 33445/tcp 33445/udp

@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - TOXCORE_DESIRED_VERSION=0.2.16
     ports:
       - 33444:8080/tcp
       - 33444:8080/udp
@@ -18,5 +20,4 @@ services:
       - ./tox-bootstrapd.conf:/etc/tox-bootstrapd.conf
       - ./tox-bootstrapd_var-lib:/var/lib/tox-bootstrapd
     tty: true
-    stdin_open: true
     restart: unless-stopped
